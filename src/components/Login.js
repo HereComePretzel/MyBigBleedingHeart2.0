@@ -9,6 +9,7 @@ const Login = () => {
 
 
     return(
+        <form>
         <div>
            <label>Username</label>
            <br />
@@ -22,6 +23,7 @@ const Login = () => {
            <br />
            <Link to='/signup'><button>Signup</button></Link>
         </div>
+        </form>
     )
 }
 

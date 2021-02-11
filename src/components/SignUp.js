@@ -13,30 +13,37 @@ const Signup = () => {
     })
 
     return(
+        <form>
         <div>
             <label>Username</label>
             <input 
                 type='text'
                 onChange={() => setUsername()}
             />
+            <br/>
             
             <label>Password</label>
             <input 
                 type='text'
                 onChange={() => setPassword()}
             />
+            <br/>
             
             <label>Confirm Password</label>
             <input type='text'/>
+
+            <br/>
 
             <label>Email</label>
             <input 
                 type='text'
                 onChange={() => setEmail()}
             />
-            
+            <br/>
+
             <button>Join!</button>
         </div>
+        </form>
     )
 }
 
