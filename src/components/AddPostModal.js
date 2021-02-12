@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import DatePicker from 'react-date-picker';
 
 const AddPostModal = () => {
     const [showModal, setShowModal] = React.useState(false);
@@ -12,6 +13,8 @@ const AddPostModal = () => {
     const [goals, setGoals] = useState('')
     const [notes, setNotes] = useState('')
     const [happyMemory, setHappyMemory] = useState('')
+    const [value, onChange] = useState(new Date());
+    
 
     const addPost = (e) => {
       axios.post('http://localhost:3000/posts', {
@@ -23,6 +26,11 @@ const AddPostModal = () => {
       })
     }
 
+    const addPostAndClose = () => {
+      setShowModal(false);
+      addPost();
+    }
+
     return(
       <div>
     <>
@@ -32,13 +40,13 @@ const AddPostModal = () => {
         style={{ transition: "all .15s ease" }}
         onClick={() => setShowModal(true)}
       >
-        Open regular modal
+        Add Post
       </button>
-      {/* {showModal ? ( */}
+      {showModal ? (
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-            onClick={() => setShowModal(false)}
+            // onClick={() => setShowModal(false)}
           >
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               {/*content*/}
@@ -64,9 +72,15 @@ const AddPostModal = () => {
                   <form id="myForm" action="#" method="post">
 
   <div>
-    <label for="name">Todays Date:</label>
+    <label for="date">Todays Date:</label>
     <input onChange={(e) => setDate(e.target.value)} type="text" name="date" id="date" value={date} tabindex="1" />
   </div>
+      <div>
+      <DatePicker
+        onChange={onChange}
+        value={value}
+      />
+    </div>
   <div>
     <label for="rating">How was your day?</label>
     <select onChange={(e) => setNumber(e.target.value)} as='select' name="number" id="number" value={number} tabindex="2">
@@ -145,10 +159,9 @@ const AddPostModal = () => {
                   </button>
                   <button
                     className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="submit"
+                    type="button"
                     style={{ transition: "all .15s ease" }}
-                    onClick={() => setShowModal(false)}
-                    onClick={() => addPost()} 
+                    onClick={() => addPostAndClose()}
                   >
                     Submit
                   </button>
