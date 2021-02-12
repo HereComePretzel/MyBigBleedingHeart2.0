@@ -4,7 +4,7 @@ import axios from 'axios'
 const AddPostModal = () => {
     const [showModal, setShowModal] = React.useState(false);
     const [date, setDate] = useState('')
-    const [rating, setRating] = useState('')
+    const [number, setNumber] = useState('')
     const [medsTaken, setMedsTaken] = useState(false)
     const [suicidalThoughts, setSuicidalThoughts] = useState(false)
     const [goodThoughts, setGoodThoughts] = useState('')
@@ -14,9 +14,14 @@ const AddPostModal = () => {
     const [happyMemory, setHappyMemory] = useState('')
 
     const addPost = (e) => {
-        e.preventDefault()
-        axios.post('http://localhost:3000/posts')
-    } 
+      axios.post('http://localhost:3000/posts', {
+        date, number, medsTaken, suicidalThoughts, goodThoughts, badThoughts, goals, notes, happyMemory
+      }).then(resp => {
+        console.log(resp)
+      }, err => {
+        console.log(err)
+      })
+    }
 
     return(
       <div>
@@ -29,7 +34,7 @@ const AddPostModal = () => {
       >
         Open regular modal
       </button>
-      {showModal ? (
+      {/* {showModal ? ( */}
         <>
           <div
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
@@ -60,42 +65,72 @@ const AddPostModal = () => {
 
   <div>
     <label for="name">Todays Date:</label>
-    <input type="text" name="date" id="date" value={date} tabindex="1" />
+    <input onChange={(e) => setDate(e.target.value)} type="text" name="date" id="date" value={date} tabindex="1" />
+  </div>
+  <div>
+    <label for="rating">How was your day?</label>
+    <select onChange={(e) => setNumber(e.target.value)} as='select' name="number" id="number" value={number} tabindex="2">
+      <option value='1'>1 - Worst. Day. Ever.</option> 
+      <option value='2'>2 - Meh.</option> 
+      <option value='3'>3 - Far less good than bad.</option> 
+      <option value='4'>4 - Life's haze is palpable.</option> 
+      <option value='5'>5 - 2 out of 4 stars. Would not recommend.</option> 
+      <option value='6'>6 - Not the worst. Def not the best.</option> 
+      <option value='7'>7 - Fully average.</option> 
+      <option value='8'>8 - Sitting above average.</option> 
+      <option value='9'>9 - I'm on top of the world!</option> 
+      <option value='10'>10 - Best. Day. Ever.</option> 
+      </select>
   </div>
 
   <div>
-    <h4>Radio Button Choice</h4>
+    <h4>Did you take your meds today?</h4>
 
-    <label for="radio-choice-1">Choice 1</label>
-    <input type="radio" name="radio-choice" id="radio-choice-1" tabindex="2" value="choice-1" />
+    <label for="medsTaken">Yes</label>
+    <input onClick={(e) => setMedsTaken(e.target.value)} type="radio" name="medsTaken" id="medsTaken" tabindex="3" value={medsTaken} />
 
-    <label for="radio-choice-2">Choice 2</label>
-    <input type="radio" name="radio-choice" id="radio-choice-2" tabindex="3" value="choice-2" />
+    <label for="medsTaken">No</label>
+    <input onClick={(e) => setMedsTaken(e.target.value)} type="radio" name="medsTaken" id="medsTaken" tabindex="3" value={medsTaken} />
+  </div>
+  <div>
+    <h4>Any thoughts of suicide today?</h4>
+
+    <label for="suicidalThoughts">Yes</label>
+    <input onClick={(e) => setSuicidalThoughts(e.target.value)} type="radio" name="suicidalThoughts" id="suicidalThoughts" tabindex="4" value={suicidalThoughts} />
+
+    <label for="suicidalThoughts">No</label>
+    <input onClick={(e) => setSuicidalThoughts(e.target.value)} type="radio" name="suicidalThoughts" id="suicidalThoughts" tabindex="4" value={suicidalThoughts} />
   </div>
 
   <div>
-    <label for="select-choice">Select Dropdown Choice:</label>
-    <select name="select-choice" id="select-choice">
-      <option value="Choice 1">Choice 1</option>
-      <option value="Choice 2">Choice 2</option>
-      <option value="Choice 3">Choice 3</option>
-    </select>
-  </div>
-	
-  <div>
-    <label for="textarea">Textarea:</label>
-    <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
-  </div>
-	
-  <div>
-    <label for="checkbox">Checkbox:</label>
-    <input type="checkbox" name="checkbox" />
+    <label for="textarea">Good thoughts today?</label>
+    <br />
+    <textarea onChange={(e) => setGoodThoughts(e.target.value)} cols="60" rows="2" name="goodThoughts" id="goodThoughts" value={goodThoughts}></textarea>
   </div>
 
   <div>
-    <input type="submit" value="Submit" />
+    <label for="textarea">Bad thoughts today?</label>
+    < br/>
+    <textarea onChange={(e) => setBadThoughts(e.target.value)} cols="60" rows="2" name="badThoughts" id="badThoughts" value={badThoughts}></textarea>
   </div>
 
+  <div>
+    <label for="textarea">Future goals:</label>
+    < br/>
+    <textarea onChange={(e) => setGoals(e.target.value)} cols="60" rows="2" name="goals" id="goals" value={goals}></textarea>
+  </div>
+
+  <div>
+    <label for="textarea">Other notes:</label>
+    < br/>
+    <textarea onChange={(e) => setNotes(e.target.value)} cols="60" rows="2" name="notes" id="notes" value={notes}></textarea>
+  </div>
+
+  <div>
+    <label for="textarea">Happy Memory:</label>
+    < br/>
+    <textarea onChange={(e) => setHappyMemory(e.target.value)}cols="60" rows="2" name="happyMemory" id="happyMemory" value={happyMemory}></textarea>
+  </div>
 </form>
                 </div>
                 {/*footer*/}
@@ -110,11 +145,12 @@ const AddPostModal = () => {
                   </button>
                   <button
                     className="bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    type="button"
+                    type="submit"
                     style={{ transition: "all .15s ease" }}
                     onClick={() => setShowModal(false)}
+                    onClick={() => addPost()} 
                   >
-                    Save Changes
+                    Submit
                   </button>
                 </div>
               </div>
