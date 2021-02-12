@@ -54,13 +54,49 @@ const AddPostModal = () => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                    I always felt like I could do anything. That’s the main
-                    thing people are controlled by! Thoughts- their perception
-                    of themselves! They're slowed down by their perception of
-                    themselves. If you're taught you can’t do anything, you
-                    won’t do anything. I was taught I could do everything.
-                  </p>
+                  <p className="my-4 text-gray-600 text-lg leading-relaxed"></p>
+                  {/* FORM BEGINS HERE */}
+                  <form id="myForm" action="#" method="post">
+
+  <div>
+    <label for="name">Todays Date:</label>
+    <input type="text" name="date" id="date" value={date} tabindex="1" />
+  </div>
+
+  <div>
+    <h4>Radio Button Choice</h4>
+
+    <label for="radio-choice-1">Choice 1</label>
+    <input type="radio" name="radio-choice" id="radio-choice-1" tabindex="2" value="choice-1" />
+
+    <label for="radio-choice-2">Choice 2</label>
+    <input type="radio" name="radio-choice" id="radio-choice-2" tabindex="3" value="choice-2" />
+  </div>
+
+  <div>
+    <label for="select-choice">Select Dropdown Choice:</label>
+    <select name="select-choice" id="select-choice">
+      <option value="Choice 1">Choice 1</option>
+      <option value="Choice 2">Choice 2</option>
+      <option value="Choice 3">Choice 3</option>
+    </select>
+  </div>
+	
+  <div>
+    <label for="textarea">Textarea:</label>
+    <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
+  </div>
+	
+  <div>
+    <label for="checkbox">Checkbox:</label>
+    <input type="checkbox" name="checkbox" />
+  </div>
+
+  <div>
+    <input type="submit" value="Submit" />
+  </div>
+
+</form>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-gray-300 rounded-b">
